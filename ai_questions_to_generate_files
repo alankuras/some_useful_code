@@ -1,0 +1,22 @@
+Create a main.go file with necessary content to test if Go works correctly on workstation.
+That should include:
+- creation of a test file that tests one function defined in main.go
+- usage of gofmt, create some flaw in the code and fix the styling using gofmt, confirming that it works
+- define what to do in order to build and execute it
+
+
+
+
+
+
+
+define a bash script to prepare above files and execute necessary commands
+
+
+
+
+
+
+
+
+can you extend the testing and validation so we are sure that the binary was built, it exist, the files exist . Please set the environment variables for any paths used and be sure that it works from any working directory (the script itself)
