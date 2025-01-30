@@ -1,0 +1,48 @@
+#!/bin/bash
+
+# Create main.go
+cat <<EOL > main.go
+package main
+
+import "fmt"
+
+// Add function adds two integers
+func Add(a int, b int) int {
+    return a + b
+}
+
+func main() {
+    fmt.Println("Hello, World!")
+    result := Add(2, 3)
+    fmt.Println("2 + 3 =", result)
+}
+EOL
+
+# Create main_test.go
+cat <<EOL > main_test.go
+package main
+
+import "testing"
+
+func TestAdd(t *testing.T) {
+    result := Add(2, 3)
+    if result != 5 {
+        t.Errorf("Add(2, 3) = %d; want 5", result)
+    }
+}
+EOL
+
+# Introduce a formatting flaw in main.go
+sed -i 's/, b int/,b int/' main.go
+
+# Fix the formatting using gofmt
+gofmt -w main.go
+
+# Build the program
+go build -o myprogram main.go
+
+# Run the program
+./myprogram
+
+# Run the tests
+go test
