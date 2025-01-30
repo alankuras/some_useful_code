@@ -1,0 +1,73 @@
+#!/bin/bash
+
+# Set environment variables for paths
+export PROJECT_DIR=$(pwd)
+export MAIN_GO="$PROJECT_DIR/main.go"
+export MAIN_TEST_GO="$PROJECT_DIR/main_test.go"
+export BINARY="$PROJECT_DIR/myprogram"
+
+# Create main.go
+cat <<EOL > $MAIN_GO
+package main
+
+import "fmt"
+
+// Add function adds two integers
+func Add(a int, b int) int {
+    return a + b
+}
+
+func main() {
+    fmt.Println("Hello, World!")
+    result := Add(2, 3)
+    fmt.Println("2 + 3 =", result)
+}
+EOL
+
+# Create main_test.go
+cat <<EOL > $MAIN_TEST_GO
+package main
+
+import "testing"
+
+func TestAdd(t *testing.T) {
+    result := Add(2, 3)
+    if result != 5 {
+        t.Errorf("Add(2, 3) = %d; want 5", result)
+    }
+}
+EOL
+
+# Introduce a formatting flaw in main.go
+sed -i 's/, b int/,b int/' $MAIN_GO
+
+# Fix the formatting using gofmt
+gofmt -w $MAIN_GO
+
+# Build the program
+go build -o $BINARY $MAIN_GO
+
+# Check if the binary was built successfully
+if [ ! -f "$BINARY" ]; then
+    echo "Error: Binary not built."
+    exit 1
+fi
+
+# Run the program
+$BINARY
+
+# Run the tests
+go test
+
+# Check if the files exist
+if [ ! -f "$MAIN_GO" ]; then
+    echo "Error: main.go not found."
+    exit 1
+fi
+
+if [ ! -f "$MAIN_TEST_GO" ]; then
+    echo "Error: main_test.go not found."
+    exit 1
+fi
+
+echo "All checks passed successfully."
