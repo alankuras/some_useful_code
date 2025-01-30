@@ -20,3 +20,8 @@ define a bash script to prepare above files and execute necessary commands
 
 
 can you extend the testing and validation so we are sure that the binary was built, it exist, the files exist . Please set the environment variables for any paths used and be sure that it works from any working directory (the script itself)
+
+
+
+
+its missing go mod file
