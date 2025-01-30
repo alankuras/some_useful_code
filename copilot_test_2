@@ -5,6 +5,14 @@ export PROJECT_DIR=$(pwd)
 export MAIN_GO="$PROJECT_DIR/main.go"
 export MAIN_TEST_GO="$PROJECT_DIR/main_test.go"
 export BINARY="$PROJECT_DIR/myprogram"
+export MODULE_NAME="example.com/myproject"
+
+# Create go.mod
+cat <<EOL > go.mod
+module $MODULE_NAME
+
+go 1.20
+EOL
 
 # Create main.go
 cat <<EOL > $MAIN_GO
